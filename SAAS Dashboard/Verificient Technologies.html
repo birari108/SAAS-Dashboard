@@ -1,0 +1,993 @@
+  <!DOCTYPE html>
+  <html>
+    <header>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"/>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+      <style>
+        body {font-family: 'Times New Roman', Times, serif}
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+
+        .modal-header {
+          background: #8a00e5;
+          color: #fff;
+        }
+
+        .required:after {
+          content: "*";
+          color: red;
+        }
+        .sidebar {
+          height: 100%;
+          width: 70px;
+          text-align: center;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: white;
+          overflow-x: hidden;
+          padding-top: 250px;
+          display: inline-block;
+        }
+
+        .sidebar a {
+          padding: 16px ;
+          text-decoration: none;
+          font-size: 20px;
+          color: #b8b8b8;
+          display: block;
+        }
+
+        .sidebar a:hover {
+          border-left:5px solid #8a00e5 ;
+          transition: 0.5s;
+          color: #8a00e5;
+          font-size: 25px;
+          background-color: #f1f1f1;
+        }
+
+        .main {
+          margin-left: 60px; 
+          padding-top: 10px;
+          margin-right: 240px;
+          background-color: #f1f1f1;
+        }
+
+        .row{
+          padding: 5px;
+          margin: 10px;
+        }
+        .colum{
+          padding: 5px; 
+          margin: 5px;
+          border-radius: 10px;
+          background-color: white;
+        }
+        .aside{
+          margin-left: 88%;
+          height: 100%;
+          width: 250px;
+          text-align: center;
+          position: fixed;
+          top: 0;
+          right: 0;
+          margin-top: auto;
+          background-color: white;
+          overflow-x: hidden;
+          display: inline-block;
+        }
+
+        .card{
+          height: fit-content;
+          width: fit-content;
+          width: 200px; 
+          height: 170px; 
+          margin: 20px; 
+          background: rgb(251, 249, 252);
+          border-radius: 10px; 
+          display:flex; 
+          flex-direction: column; 
+          justify-content: left; 
+          column-gap: 5px;
+        }
+
+        .button {
+          border-radius: 8px;
+          border-color: #8a00e5;
+          background-color: transparent;
+          color: #8a00e5;
+          padding: 8px 20px;
+        }
+
+        .button:hover {
+          color: white;
+          background-color: #8a00e5;
+        }
+
+        .button-1 {
+          float: right;
+          border-radius: 8px;
+          border-color: #8a00e5;
+          background-color: #c8c0ff87;
+          color: #8a00e5;
+          padding: 5px 15px;
+          border: none;
+        }
+        .button-1:hover {
+          color: white;
+          background-color: #8a00e5;
+        }  
+
+        .exchange {
+          border: none;
+          border-radius: 4px;
+          background-color: #c8c0ff87;
+          color: #8a00e5;
+          padding: 4px;
+        }
+
+        .exchange_currency {
+          text-align: center;
+        }
+
+        .exchange_currency button {
+          color: #8a00e5;
+          border: none;
+          background-color: white;
+        }
+      </style>
+    </header>
+    <body>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <a href="#" class="nav-link active"><i class="fa fa-fw fa fa-columns" aria-current="page"></i></a>
+        <a href="#"><i class="fa fa-fw fa-suitcase"></i></a>
+        <a href="#"><i class="fa fa-fw fa-exchange"></i></a>
+        <a href="#"><i class="fa fa-fw fa-credit-card"></i></a>
+      </div>
+      <!-- Sidebar -->
+      
+      <!-- Main Section -->
+      <div class="main">
+        <div class="container">
+          <!-- Login Form -->
+          <div class="container-fluid">
+            <div class="colum col d-flex justify-content-end" style="background-color: #f1f1f1;">
+              <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#myModal">Login</button>
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Login Form</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label required">Email</label>
+                          <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label required">Password</label>
+                          <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                          <label class="form-check-label" for="exampleCheck1">
+                            <div class="mb-3 form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Remember Password</label>
+                            </div>
+                          </label>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="button">Login</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Login Form -->
+
+          <!-- Renew Subscription -->
+          <div class="row">
+            <div class="colum col">  
+              <nav class="navbar">
+                <div class="container-fluid">
+                  <b class="navbar-brand bi bi-info-circle">&nbsp Exchange Not Connected </b>
+                  <form class="d-flex">
+                    <b style="margin: 10px;">Trial Subscription - 7 more days left </b>
+                    <button type="button" class="button">Renew Subscription</button>
+                  </form>
+                </div>
+              </nav>    
+            </div>
+          </div>
+          <!-- Renew Subscription -->
+
+          <!-- Balance and pai chart -->
+          <div class="row">
+            <div class="colum col bi bi-window-dock" aria-hidden="true" style="text-align: left; padding-top:15px; padding-left:20px ">
+              <b>&nbsp Balance</b><br><br>
+              <h3><b>$ 25,200.95</b></h3>
+                <div style="text-align: center;">
+                  <div class="col" style="position:relative;display: inline-block; margin: 20px; border-right: 2px solid gray;padding-right: 40px;"><i style="color: gray;" class="fa fa-arrow-down" aria-hidden="true"> Invested</i><br><b>$10,450.45</b></div>
+                  <div class="col" style="position:relative; display: inline-block; margin: 20px;border-right: 2px solid gray;padding-right: 40px; "><i style="color: gray;" class="fa fa-arrow-up" aria-hidden="true"> % Profit</i><br><b>+60%</b></div>
+                  <div class="col" style="position:relative; display: inline-block; margin: 20px;"><i style="color: gray;" class="fa fa-arrow-up" aria-hidden="true"> USD Profit</i><br><b>$15,645.32</b></div>
+                </div>
+                <br>
+                <div style="padding-bottom: 30px;">
+                  <button type="submit" class="button">Add Exchange</button>
+                </div>
+            </div>
+            <div class="colum col "  style="box-sizing: auto;">
+              <canvas id="myChart" style="width: 100%; max-width: 550px"></canvas>
+            </div>
+          </div>
+          <!-- Balance and pai chart -->
+
+          <!-- Portfolio -->
+          <div class="row">
+            <!-- Portfolio 1 -->
+            <div class=" colum col" style="text-align: left; padding-top:15px; padding-left: 10px ">
+              <div class="row">
+                <div class="col-7">
+                  <p><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp <b>Portfolio 1</b></p>
+                </div>
+                <div class="col-4">
+                  <div style="color: #747272; height: 20px;"><b>Day</b><br><i class="fa fa-sort-asc" style="color: rgb(73, 187, 73);" aria-hidden="true"></i>&nbsp 3.7%</div>
+                </div>
+              </div>
+              <canvas id="lineChart-1" style="width: 100%; max-width: 350px"></canvas>
+              <hr>
+              <div style="text-align: center;">
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px; border-right: 2px solid gray;padding-right: 30px;">
+                  <b>Week</b>
+                  <br>
+                  <i style="color: rgb(255, 0, 0);" class="fa fa-arrow-down" aria-hidden="true">
+                    <span style="color: black;">&nbsp 7%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;border-right: 2px solid gray;padding-right: 30px; ">
+                  <b>Year</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 29%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;">
+                  <b>All Time</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 254%</span>
+                  </i>
+                </div>
+              </div>
+            </div>
+            <!-- Portfolio 1 -->
+
+            <!-- Portfolio 2 -->
+            <div class=" colum col" style="text-align: left; padding-top:15px; padding-left: 10px ">
+              <div class="row">
+                <div class="col-7">
+                  <p><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp <b>Portfolio 2</b></p>
+                </div>
+                <div class="col-4">
+                  <div style="color: #747272; height: 20px;"><b>Day</b><br><i class="fa fa-sort-asc" style="color: rgb(73, 187, 73);" aria-hidden="true"></i>&nbsp 3.7%</div>
+                </div>
+              </div>
+              <canvas id="lineChart-2" style="width: 100%; max-width: 350px"></canvas>
+              <hr>
+              <div style="text-align: center;">
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px; border-right: 2px solid gray;padding-right: 30px;">
+                  <b>Week</b>
+                  <br>
+                  <i style="color: rgb(255, 0, 0);" class="fa fa-arrow-down" aria-hidden="true">
+                    <span style="color: black;">&nbsp 7%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;border-right: 2px solid gray;padding-right: 30px; ">
+                  <b>Year</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 29%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;">
+                  <b>All Time</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 254%</span>
+                  </i>
+                </div>
+              </div>
+            </div>
+            <!-- Portfolio 2 -->
+
+            <!-- Portfolio 3 -->
+            <div class=" colum col" style="text-align: left; padding-top:15px; padding-left: 10px ">
+              <div class="row">
+                <div class="col-7">
+                  <p><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp <b>Portfolio 3</b></p>
+                </div>
+                <div class="col-4">
+                  <div style="color: #747272; height: 20px;"><b>Day</b><br><i class="fa fa-sort-asc" style="color: rgb(73, 187, 73);" aria-hidden="true"></i>&nbsp 3.7%</div>
+                </div>
+              </div>
+              <canvas id="lineChart-3" style="width: 100%; max-width: 350px"></canvas>
+              <hr>
+              <div style="text-align: center;">
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px; border-right: 2px solid gray;padding-right: 30px;">
+                  <b>Week</b>
+                  <br>
+                  <i style="color: rgb(255, 0, 0);" class="fa fa-arrow-down" aria-hidden="true">
+                    <span style="color: black;">&nbsp 7%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;border-right: 2px solid gray;padding-right: 30px; ">
+                  <b>Year</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 29%</span>
+                  </i>
+                </div>
+                <div class="col-3" style="position:relative; display: inline-block; margin: 10px;">
+                  <b>All Time</b>
+                  <br>
+                  <i style="color: rgb(63, 178, 43);" class="fa fa-arrow-up" aria-hidden="true">
+                    <span style="color: black;">&nbsp 254%</span>
+                  </i>
+                </div>
+              </div>
+            </div>
+            <!-- Portfolio 3 -->
+          </div>
+          <!-- Portfolio -->
+
+          <!-- Line Chart and Transactions -->
+          <div class="row">
+            <!-- Line Chart -->
+            <div class="colum col-8 fa fa-signal" aria-hidden="true" id="chart4" style="text-align: left; padding-top:15px; padding-left:20px "><b> Chart</b></div>
+            <!-- Line Chart -->
+
+            <!-- Transactions -->
+            <div class="colum col-4" style="width: 31.333333%; padding: 35px;">
+              <b>&lrhar; &nbsp;Transactions</b>
+              <button type="submit" class="button-1">See all</button>
+              <div style="padding-top: 55px">
+                <div class="row">
+                  <div class="col-3" style="height:20px">
+                    <div class="fa fa-arrow-down" style="height: 40px; width: 40px; background-color: #c8c0ff87; color: #8a00e5; border-radius: 50%; padding: 12px;"></div>
+                  </div>
+                  <div class="col-4" style="color: #747272; height: 20px;"><b>Buy</b> $2500.00</div>
+                  <div class="col-5" style="color:#747272; height: 20px;">Apr 22,2022</div>
+                </div>
+                <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+                  <div class="col-3" style="height:20px">
+                    <div class="fa fa-arrow-down" style="height: 40px; width: 40px; background-color: #c8c0ff87; color: #8a00e5; border-radius: 50%; padding: 12px;"></div>
+                  </div>
+                  <div class="col-4" style="color: #747272; height: 20px;"><b>Buy</b> $2500.00</div>
+                  <div class="col-5" style="color:#747272; height: 20px;">Apr 22,2022</div>
+                </div>
+                <div class="row">
+                  <div class="col-3" style="height:20px">
+                    <div class="fa fa-arrow-down" style="height: 40px; width: 40px; background-color: #c8c0ff87; color: #8a00e5; border-radius: 50%; padding: 12px;"></div>
+                  </div>
+                  <div class="col-4" style="color: #747272; height: 20px;"><b>Buy</b> $2500.00</div>
+                  <div class="col-5" style="color:#747272; height: 20px;">Apr 22,2022</div>
+                </div>
+              </div>
+            </div>
+            <!-- Transactions -->
+          </div>
+          <!-- Line Chart and Transactions -->
+        </div>
+      </div>
+      <!-- Main Section -->
+
+      <!-- Right Sidebar -->
+      <div class="aside">
+        <div class="container2">
+          <div class="mb-3 justify-content-md-end" style="border: none;">
+            <div class="card-header " style="border:none; background-color: white;" >
+              <div class="row">
+                <div class="col-md-4"><img src="./img/Screenshot.png" class="rounded-circle img-fluid" style="height:50px; padding: 0px;" /></div><br><br>
+                <div class="col-md-8"><p>Good Morning, Krunal!<br><a href="#" style="color:blueviolet; text-decoration: none;">Setting</a></p>
+              </div>
+            </div>
+            </div>
+            <div class="card-body" style="border: none; margin: 0px 20px;">  
+              <h5 class="card-title" style="text-align: left;">
+                <b> &UpArrowDownArrow; Recent Activity</b> 
+              </h5>
+              <div style="text-align: left; margin-left: 20px;"> 
+                <b> &UpArrow;  1,837 USD - 0.085 BTC</b>
+                <p> &nbsp;&nbsp; 1 BTC = 8,848 USD</p>
+                <b> &UpArrow; 1,837 USD - 0.085 BTC</b>
+                <p> &nbsp;&nbsp; 1 BTC = 8,848 USD</p>
+                <b > &UpArrow; 1,837 USD - 0.085 BTC</b>
+                <p> &nbsp;&nbsp; 1 BTC = 8,848 USD</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="card-body">
+          <div class="row" style="background-color: white; margin: 0px 10px;">
+            <div class="col-sm-8">
+              <h6 class="card-title" style="text-align:left; margin-bottom: 10px;"><b><i class="bi bi-arrow-repeat"></i>&nbsp;Exchange</b></h6>
+            </div>
+            <div class="col-sm-4"></div>
+            <br>
+            <div>
+              <!-- Currency Convert -->
+              <div>
+                <div class="currency">
+                  <select id="currency-one" class="exchange">
+                    <option value="AED">AED</option>
+                    <option value="ARS">ARS</option>
+                    <option value="AUD">AUD</option>
+                    <option value="BGN">BGN</option>
+                    <option value="BRL">BRL</option>
+                    <option value="BSD">BSD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CLP">CLP</option>
+                    <option value="CNY">CNY</option>
+                    <option value="COP">COP</option>
+                    <option value="CZK">CZK</option>
+                    <option value="DKK">DKK</option>
+                    <option value="DOP">DOP</option>
+                    <option value="EGP">EGP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="FJD">FJD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="GTQ">GTQ</option>
+                    <option value="HKD">HKD</option>
+                    <option value="HRK">HRK</option>
+                    <option value="HUF">HUF</option>
+                    <option value="IDR">IDR</option>
+                    <option value="ILS">ILS</option>
+                    <option value="INR">INR</option>
+                    <option value="ISK">ISK</option>
+                    <option value="JPY">JPY</option>
+                    <option value="KRW">KRW</option>
+                    <option value="KZT">KZT</option>
+                    <option value="MXN">MXN</option>
+                    <option value="MYR">MYR</option>
+                    <option value="NOK">NOK</option>
+                    <option value="NZD">NZD</option>
+                    <option value="PAB">PAB</option>
+                    <option value="PEN">PEN</option>
+                    <option value="PHP">PHP</option>
+                    <option value="PKR">PKR</option>
+                    <option value="PLN">PLN</option>
+                    <option value="PYG">PYG</option>
+                    <option value="RON">RON</option>
+                    <option value="RUB">RUB</option>
+                    <option value="SAR">SAR</option>
+                    <option value="SEK">SEK</option>
+                    <option value="SGD">SGD</option>
+                    <option value="THB">THB</option>
+                    <option value="TRY">TRY</option>
+                    <option value="TWD">TWD</option>
+                    <option value="UAH">UAH</option>
+                    <option value="USD" selected>USD</option>
+                    <option value="UYU">UYU</option>
+                    <option value="VND">VND</option>
+                    <option value="ZAR">ZAR</option>
+                  </select>
+                  <input type="number" id="amount-one" style="width: 50%; border: none; text-align: right;" placeholder="0" value="1" />
+                </div>
+              </div>
+              <div class="exchange_currency">
+                  <button id="swap" style="font-size: 27px; "><i class="bi bi-arrow-repeat"></i></button>
+              </div>
+              <div>
+                <div class="currency">
+                  <select id="currency-two" class="exchange">
+                    <option value="AED">AED</option>
+                    <option value="ARS">ARS</option>
+                    <option value="AUD">AUD</option>
+                    <option value="BGN">BGN</option>
+                    <option value="BRL">BRL</option>
+                    <option value="BSD">BSD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CLP">CLP</option>
+                    <option value="CNY">CNY</option>
+                    <option value="COP">COP</option>
+                    <option value="CZK">CZK</option>
+                    <option value="DKK">DKK</option>
+                    <option value="DOP">DOP</option>
+                    <option value="EGP">EGP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="FJD">FJD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="GTQ">GTQ</option>
+                    <option value="HKD">HKD</option>
+                    <option value="HRK">HRK</option>
+                    <option value="HUF">HUF</option>
+                    <option value="IDR">IDR</option>
+                    <option value="ILS">ILS</option>
+                    <option value="INR" selected>INR</option>
+                    <option value="ISK">ISK</option>
+                    <option value="JPY">JPY</option>
+                    <option value="KRW">KRW</option>
+                    <option value="KZT">KZT</option>
+                    <option value="MXN">MXN</option>
+                    <option value="MYR">MYR</option>
+                    <option value="NOK">NOK</option>
+                    <option value="NZD">NZD</option>
+                    <option value="PAB">PAB</option>
+                    <option value="PEN">PEN</option>
+                    <option value="PHP">PHP</option>
+                    <option value="PKR">PKR</option>
+                    <option value="PLN">PLN</option>
+                    <option value="PYG">PYG</option>
+                    <option value="RON">RON</option>
+                    <option value="RUB">RUB</option>
+                    <option value="SAR">SAR</option>
+                    <option value="SEK">SEK</option>
+                    <option value="SGD">SGD</option>
+                    <option value="THB">THB</option>
+                    <option value="TRY">TRY</option>
+                    <option value="TWD">TWD</option>
+                    <option value="UAH">UAH</option>
+                    <option value="USD">USD</option>
+                    <option value="UYU">UYU</option>
+                    <option value="VND">VND</option>
+                    <option value="ZAR">ZAR</option>
+                  </select>
+                  <input type="number" id="amount-two" style="width: 50%; border: none; text-align: right;" placeholder="0" />
+                </div>
+              </div>
+              <!-- Currency Convert -->
+            </div>
+          </div>
+        </div>
+        <div class="card" style="background: linear-gradient(120deg, #8a00e5 50%, #a250ea 50%); margin-top: 50px; height: 160px;">
+          <div class="card-image" style="object-fit: cover;">
+            <img src="./img/email-notification.jpg" style="height:70px; margin-top: -35px; "/>
+          </div>
+          <div class="card-content" style="color: white;">
+            <p style="font-size: 18px; padding-top:10px;">
+                  Invite Customers and get <b>$10</b> for each
+            </p>
+            <button style="background-color: transparent; border-color: white; color: white; border-radius: 8px;" type="button">Send Invitation</button>
+          </div>
+        </div>
+      </div>
+      <!-- Right Sidebar -->
+
+    <!-- Java Script Part -->
+      
+      <!-- Currency Convert -->
+      <script>
+        const currencyEl_one = document.getElementById('currency-one');
+        const currencyEl_two = document.getElementById('currency-two');
+        const amountEl_one = document.getElementById('amount-one');
+        const amountEl_two = document.getElementById('amount-two');
+
+        const rateEl = document.getElementById('rate');
+        const swap = document.getElementById('swap');
+
+        // Fetch exchange rates and update the dome
+        function calculate() {
+          const currency_one = currencyEl_one.value;
+          const currency_two = currencyEl_two.value;
+
+          fetch(`https://app.exchangerate-api.com/activate/332d727a77506012028560bcae/latest/${currency_one}`)
+            .then((res) => res.json())
+            .then((data) => {
+              //   console.log(data);
+              const rate = data.conversion_rates[currency_two];
+              rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two}`;
+
+              amountEl_two.value = (amountEl_one.value * rate).toFixed(2);
+            });
+        }
+
+        // Event Listeners
+        currencyEl_one.addEventListener('change', calculate);
+        amountEl_one.addEventListener('input', calculate);
+        currencyEl_two.addEventListener('change', calculate);
+        amountEl_two.addEventListener('input', calculate);
+        swap.addEventListener('click', () => {
+          const temp = currencyEl_one.value;
+          currencyEl_one.value = currencyEl_two.value;
+          currencyEl_two.value = temp;
+          calculate();
+        });
+
+        calculate();
+      </script>
+      <!-- Currency Convert -->
+
+      <!-- donat graph -->
+      <script>
+        var xValues = ["Bitcoin : $ 11,567.00", "Ethereum : $ 5,583.00", "Monero : $ 8,050.97"];
+        var yValues = [11567.00, 5583.00, 8050.97];
+        var barColors = [
+          "#c8c0ff",
+          "#f3f1ff",
+          "#9900ff"
+        ];
+        
+        new Chart("myChart", {
+          type: "doughnut",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: "$ 25,200.97"
+            }
+          }
+        });
+      </script>
+      <!-- donat graph -->
+
+      <!-- Line Chart-1 Graph -->
+      <script>
+        const ctx_1 = document.getElementById('lineChart-1').getContext('2d');
+        const myChart_1 = new Chart(ctx_1, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Earnings in $',
+                    data: [2050,1900,2100,1950,2800,2000,2500,2100,2300,1900,2400,2700],
+                    backgroundColor: [
+                        "#f3f1ff"
+                    ],
+                    borderColor: [
+                        "#9900ff"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              responsive:true
+            }
+        });
+      </script>
+      <!-- Line Chart-1 Graph -->
+
+      <!-- Line Chart-2 Graph -->
+      <script>
+        const ctxs_2 = document.getElementById('lineChart-2').getContext('2d');
+        const myChart_2 = new Chart(ctxs_2, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Earnings in $',
+                    data: [2050,1900,2100,1950,2800,2000,2500,2100,2300,1900,2400,2700],
+                    backgroundColor: [
+                        "#f3f1ff"
+                    ],
+                    borderColor: [
+                        "#9900ff"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              responsive:true
+            }
+        });
+      </script>
+      <!-- Line Chart-2 Graph -->
+
+      <!-- Line Chart-3 Graph -->      
+      <script>
+        const ctx_3 = document.getElementById('lineChart-3').getContext('2d');
+        const myChart_3 = new Chart(ctx_3, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Earnings in $',
+                    data: [2050,1900,2100,1950,2800,2000,2500,2100,2300,1900,2400,2700],
+                    backgroundColor: [
+                        "#f3f1ff"
+                    ],
+                    borderColor: [
+                        "#9900ff"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              responsive:true
+            }
+        });
+      </script>
+      <!-- Line Chart-3 Graph -->
+      
+      <!-- chart script id #chart4 -->
+      <script>
+          var options = {
+            series: [{
+                  data: [{
+                        x: new Date(1538778600000),
+                        y: [6629.81, 6650.5, 6623.04, 6633.33]
+                      },
+                      {
+                        x: new Date(1538780400000),
+                        y: [6632.01, 6643.59, 6620, 6630.11]
+                      },
+                      {
+                        x: new Date(1538782200000),
+                        y: [6630.71, 6648.95, 6623.34, 6635.65]
+                      },
+                      {
+                        x: new Date(1538784000000),
+                        y: [6635.65, 6651, 6629.67, 6638.24]
+                      },
+                      {
+                        x: new Date(1538785800000),
+                        y: [6638.24, 6640, 6620, 6624.47]
+                      },
+                      {
+                        x: new Date(1538787600000),
+                        y: [6624.53, 6636.03, 6621.68, 6624.31]
+                      },
+                      {
+                        x: new Date(1538789400000),
+                        y: [6624.61, 6632.2, 6617, 6626.02]
+                      },
+                      {
+                        x: new Date(1538791200000),
+                        y: [6627, 6627.62, 6584.22, 6603.02]
+                      },
+                      {
+                        x: new Date(1538793000000),
+                        y: [6605, 6608.03, 6598.95, 6604.01]
+                      },
+                      {
+                        x: new Date(1538794800000),
+                        y: [6604.5, 6614.4, 6602.26, 6608.02]
+                      },
+                      {
+                        x: new Date(1538796600000),
+                        y: [6608.02, 6610.68, 6601.99, 6608.91]
+                      },
+                      {
+                        x: new Date(1538798400000),
+                        y: [6608.91, 6618.99, 6608.01, 6612]
+                      },
+                      {
+                        x: new Date(1538800200000),
+                        y: [6612, 6615.13, 6605.09, 6612]
+                      },
+                      {
+                        x: new Date(1538802000000),
+                        y: [6612, 6624.12, 6608.43, 6622.95]
+                      },
+                      {
+                        x: new Date(1538803800000),
+                        y: [6623.91, 6623.91, 6615, 6615.67]
+                      },
+                      {
+                        x: new Date(1538805600000),
+                        y: [6618.69, 6618.74, 6610, 6610.4]
+                      },
+                      {
+                        x: new Date(1538807400000),
+                        y: [6611, 6622.78, 6610.4, 6614.9]
+                      },
+                      {
+                        x: new Date(1538809200000),
+                        y: [6614.9, 6626.2, 6613.33, 6623.45]
+                      },
+                      {
+                        x: new Date(1538811000000),
+                        y: [6623.48, 6627, 6618.38, 6620.35]
+                      },
+                      {
+                        x: new Date(1538812800000),
+                        y: [6619.43, 6620.35, 6610.05, 6615.53]
+                      },
+                      {
+                        x: new Date(1538814600000),
+                        y: [6615.53, 6617.93, 6610, 6615.19]
+                      },
+                      {
+                        x: new Date(1538816400000),
+                        y: [6615.19, 6621.6, 6608.2, 6620]
+                      },
+                      {
+                        x: new Date(1538818200000),
+                        y: [6619.54, 6625.17, 6614.15, 6620]
+                      },
+                      {
+                        x: new Date(1538820000000),
+                        y: [6620.33, 6634.15, 6617.24, 6624.61]
+                      },
+                      {
+                        x: new Date(1538821800000),
+                        y: [6625.95, 6626, 6611.66, 6617.58]
+                      },
+                      {
+                        x: new Date(1538823600000),
+                        y: [6619, 6625.97, 6595.27, 6598.86]
+                      },
+                      {
+                        x: new Date(1538825400000),
+                        y: [6598.86, 6598.88, 6570, 6587.16]
+                      },
+                      {
+                        x: new Date(1538827200000),
+                        y: [6588.86, 6600, 6580, 6593.4]
+                      },
+                      {
+                        x: new Date(1538829000000),
+                        y: [6593.99, 6598.89, 6585, 6587.81]
+                      },
+                      {
+                        x: new Date(1538830800000),
+                        y: [6587.81, 6592.73, 6567.14, 6578]
+                      },
+                      {
+                        x: new Date(1538832600000),
+                        y: [6578.35, 6581.72, 6567.39, 6579]
+                      },
+                      {
+                        x: new Date(1538834400000),
+                        y: [6579.38, 6580.92, 6566.77, 6575.96]
+                      },
+                      {
+                        x: new Date(1538836200000),
+                        y: [6575.96, 6589, 6571.77, 6588.92]
+                      },
+                      {
+                        x: new Date(1538838000000),
+                        y: [6588.92, 6594, 6577.55, 6589.22]
+                      },
+                      {
+                        x: new Date(1538839800000),
+                        y: [6589.3, 6598.89, 6589.1, 6596.08]
+                      },
+                      {
+                        x: new Date(1538841600000),
+                        y: [6597.5, 6600, 6588.39, 6596.25]
+                      },
+                      {
+                        x: new Date(1538843400000),
+                        y: [6598.03, 6600, 6588.73, 6595.97]
+                      },
+                      {
+                        x: new Date(1538845200000),
+                        y: [6595.97, 6602.01, 6588.17, 6602]
+                      },
+                      {
+                        x: new Date(1538847000000),
+                        y: [6602, 6607, 6596.51, 6599.95]
+                      },
+                      {
+                        x: new Date(1538848800000),
+                        y: [6600.63, 6601.21, 6590.39, 6591.02]
+                      },
+                      {
+                        x: new Date(1538850600000),
+                        y: [6591.02, 6603.08, 6591, 6591]
+                      },
+                      {
+                        x: new Date(1538852400000),
+                        y: [6591, 6601.32, 6585, 6592]
+                      },
+                      {
+                        x: new Date(1538854200000),
+                        y: [6593.13, 6596.01, 6590, 6593.34]
+                      },
+                      {
+                        x: new Date(1538856000000),
+                        y: [6593.34, 6604.76, 6582.63, 6593.86]
+                      },
+                      {
+                        x: new Date(1538857800000),
+                        y: [6593.86, 6604.28, 6586.57, 6600.01]
+                      },
+                      {
+                        x: new Date(1538859600000),
+                        y: [6601.81, 6603.21, 6592.78, 6596.25]
+                      },
+                      {
+                        x: new Date(1538861400000),
+                        y: [6596.25, 6604.2, 6590, 6602.99]
+                      },
+                      {
+                        x: new Date(1538863200000),
+                        y: [6602.99, 6606, 6584.99, 6587.81]
+                      },
+                      {
+                        x: new Date(1538865000000),
+                        y: [6587.81, 6595, 6583.27, 6591.96]
+                      },
+                      {
+                        x: new Date(1538866800000),
+                        y: [6591.97, 6596.07, 6585, 6588.39]
+                      },
+                      {
+                        x: new Date(1538868600000),
+                        y: [6587.6, 6598.21, 6587.6, 6594.27]
+                      },
+                      {
+                        x: new Date(1538870400000),
+                        y: [6596.44, 6601, 6590, 6596.55]
+                      },
+                      {
+                        x: new Date(1538872200000),
+                        y: [6598.91, 6605, 6596.61, 6600.02]
+                      },
+                      {
+                        x: new Date(1538874000000),
+                        y: [6600.55, 6605, 6589.14, 6593.01]
+                      },
+                      {
+                        x: new Date(1538875800000),
+                        y: [6593.15, 6605, 6592, 6603.06]
+                      },
+                      {
+                        x: new Date(1538877600000),
+                        y: [6603.07, 6604.5, 6599.09, 6603.89]
+                      },
+                      {
+                        x: new Date(1538879400000),
+                        y: [6604.44, 6604.44, 6600, 6603.5]
+                      },
+                      {
+                        x: new Date(1538881200000),
+                        y: [6603.5, 6603.99, 6597.5, 6603.86]
+                      },
+                      {
+                        x: new Date(1538883000000),
+                        y: [6603.85, 6605, 6600, 6604.07]
+                      },
+                      {
+                        x: new Date(1538884800000),
+                        y: [6604.98, 6606, 6604.07, 6606]
+                      },
+                  ]
+            }],
+            chart: {
+              type: 'candlestick',
+              height: 350
+            },
+            title: {
+              text: '',
+              align: 'left'
+            },
+            xaxis: {
+              type: 'datetime'
+            },
+            yaxis: {
+              tooltip: {
+                enabled: true
+              }
+            },
+          };
+          var chart = new ApexCharts(document.querySelector("#chart4"), options);
+          chart.render();
+      </script>
+      <!-- chart script id #chart4 -->
+    <!-- Java Script Part -->
+    </body>
+  </html> 
